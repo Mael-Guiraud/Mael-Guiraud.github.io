@@ -1257,7 +1257,8 @@ input, select, textarea {
 		background-image: -moz-radial-gradient(rgba(0, 0, 0, 0.25) 25%, rgba(0, 0, 0, 0) 55%);
 		background-image: -webkit-radial-gradient(rgba(0, 0, 0, 0.25) 25%, rgba(0, 0, 0, 0) 55%);
 		background-image: -ms-radial-gradient(rgba(0, 0, 0, 0.25) 25%, rgba(0, 0, 0, 0) 55%);
-		background-image: radial-gradient(rgba(0, 0, 0, 0.25) 25%, rgba(0, 0, 0, 0) 55%);
+		background-image: radial-gradient(rgba(0, 0, 0, 0.25) 25%, rgba(0, 0, 0, 0) 55%);*/
+		
 		max-width: 100%;
 		text-align: center;
 	}
@@ -1296,10 +1297,21 @@ input, select, textarea {
 			line-height: 5.5rem;
 			border: solid 1px #ffffff;
 			border-radius: 100%;
+
 		}
 
 			#header .logo .icon:before {
-				font-size: 2rem;
+				font-size: 10rem;
+	
+			}
+			#header .photo {
+				width: 105px;
+			height: 105px;
+			line-height: 1px;
+			border: solid 1px #ffffff;
+			border-radius: 100%;
+				opacity: 0.5;
+	
 			}
 
 		#header .content {
@@ -1322,6 +1334,7 @@ input, select, textarea {
 				padding: 3rem 2rem;
 				max-height: 40rem;
 				overflow: hidden;
+				background-color: rgba(211, 211, 211, 0.4);
 			}
 
 				#header .content .inner > :last-child {

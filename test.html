@@ -1,185 +1,314 @@
 <!DOCTYPE html>
 <html>
-    <head>
-        <meta charset="utf-8">
-        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
-        <title>Formulaire d'évaluation du confort.</title>
-        <script
-        src="https://code.jquery.com/jquery-3.6.4.min.js"
-        integrity="sha256-oP6HI9z1XaZNBrJURtCoUT5SUnxFr8s3BzRl+cbzUq8="
-        crossorigin="anonymous"></script>
-        
-        <script>
-       $( document ).ready(()=>{
-        $('button').click((ev)=>{
-        switch(ev.currentTarget.id){
-            case "mark0": case "mark1": case "mark2":
-               $("#discomfort_kind").removeClass("hidden");
-               $("#discomfort_kind").addClass("visible");
+
+<head>
+  <meta charset="utf-8">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/css/bootstrap.min.css"
+    integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+  <title>Formulaire d'évaluation du confort.</title>
+  <script src="https://code.jquery.com/jquery-3.6.4.min.js"
+    integrity="sha256-oP6HI9z1XaZNBrJURtCoUT5SUnxFr8s3BzRl+cbzUq8=" crossorigin="anonymous"></script>
+  <script>
+
+    $(document).ready(() => {
+      $('button').click((ev) => {
+        switch (ev.currentTarget.id) {
+          case "mark0": case "mark1": case "mark2":
+            $("#discomfort_kind").removeClass("hidden");
+            $("#discomfort_kind").addClass("visible");
             break;
-            case "mark3":case "mark4":
-                $("#discomfort_kind").removeClass("visible");
-                $("#discomfort_kind").addClass("hidden"); 
-                break;
-            case "light_button":
-                $("#heat").addClass("hidden");
-                $("#heat").removeClass("visible");
-                $("#ligth").removeClass("hidden");
-                $("#ligth").addClass("visible");
-                
+          case "mark3": case "mark4":
+            $("#discomfort_kind").removeClass("visible");
+            $("#discomfort_kind").addClass("hidden");
             break;
-            case "heat_button":
-                $("#ligth").addClass("hidden");
-                $("#ligth").removeClass("visible");
-                $("#heat").removeClass("hidden");
-                $("#heat").addClass("visible");
+          case "reason_2":
+            lb = document.querySelectorAll("button.lb");
+            if (lb[0].classList.contains('selected')) {
+              $("#light").addClass("hidden");
+              $("#light").removeClass("visible");
+              $("#reason_2").removeClass("selected");
+              $("#light_0").removeClass("selected");
+              $("#light_1").removeClass("selected");
+            }
+            else {
+              hb = document.querySelectorAll("button.hb");
+              if (hb[0].classList.contains('selected')) {
+                $("#light").insertAfter("#heat");
+              }
+              $("#light").removeClass("hidden");
+              $("#light").addClass("visible");
+              $("#reason_2").addClass("selected");
+            }
+
 
             break;
-            case "sound":
-                $("#ligth").addClass("hidden");
-                $("#ligth").removeClass("visible");
-                $("#heat").addClass("hidden");
-                $("#heat").removeClass("visible");
+          case "reason_1":
+            hb = document.querySelectorAll("button.hb");
+            if (hb[0].classList.contains('selected')) {
+              $("#heat").addClass("hidden");
+              $("#heat").removeClass("visible");
+              $("#reason_1").removeClass("selected");
+              $("#heat_0").removeClass("selected");
+              $("#heat_1").removeClass("selected");
+            }
+            else {
 
+              lb = document.querySelectorAll("button.lb");
+              if (lb[0].classList.contains('selected')) {
+                $("#heat").insertAfter("#light");
+              }
+              $("#heat").removeClass("hidden");
+              $("#heat").addClass("visible");
+              $("#reason_1").addClass("selected");
+            }
             break;
-            default:
+          case "reason_4":
+            sb = document.querySelectorAll("button.sb");
+            if (sb[0].classList.contains('selected')) {
+              $("#reason_4").removeClass("selected");
+            }
+            else {
+              $("#reason_4").addClass("selected");
+            }
+            break;
+
+
+
+          default:
         }
+      });
     });
-});
-        </script>
-        <style>
-            body{
-                background-image: url('background.jpg');
-                -webkit-background-size: cover;
-  -moz-background-size: cover;
-  background-size: cover;
-  -o-background-size: cover;
-            }
 
-          button {
-            margin: 10px;
-          }
-          /* Indicateurs visuels */
-          button.smiley.selected {
-            background-color: #b0c6ee !important; 
-            border-radius: 50%;
-            border:none !important;
-            border-style: none !important; 
-            padding: 0;
-            text-align: center;
-   
-          }
-          button.smiley:hover:not(.selected) {
-            background-color: rgb(255, 255, 255);
-          }
+    function onSend() {
+      const selecteds = $('.selected');
+      if (!selecteds.length) {
+        alert('Sélectionnez des trucs');
+        return false;
+      }
 
-          .visible{
-            display: block;
-          }
-          
-          .hidden{
-            display: none;
-          }
-     
-          button.smiley {
-            font-size: 50px;
-            border: none !important;
-            background-color: transparent !important;
-            border-style: none !important; 
-          }
-        </style>
-        <script>
-          /* Fonction pour mettre à jour l'état des boutons */
-          function updateButtonState(buttons, selectedButton) {
-            for (var i = 0; i < buttons.length; i++) {
-              buttons[i].classList.remove("selected");
-            }
-            selectedButton.classList.add("selected");
-          }
-      
-          /* Fonction pour ajouter des gestionnaires d'événements clic aux boutons */
-          window.addEventListener("load", function() {
-            // Sélectionnez tous les boutons du formulaire
-            var buttons = document.querySelectorAll("button");
-      
-            // Ajoutez un gestionnaire d'événement clic à chaque bouton
-            for (var i = 0; i < buttons.length; i++) {
-              buttons[i].addEventListener("click", function() {
-                updateButtonState(buttons, this);
-              });
-            }
-          });
-        </script>
-      </head>
-      
-  <body class="container">
-    
-    <form style="background-color: rgba(255, 255, 255, 0.7)">
-        <div class="row">
-            <h1 class="col-12 text-center">Comment évalueriez-vous le confort dans la salle ?</h1>
-        </div>
+      let reason = 0;
+      for (const sel of selecteds) {
+        const score = sel.id.substring(sel.id.length - 1);
+        if (sel.id.startsWith("mark")) {
+          $('#level_hidden').val(score);
+        }
+        else if (sel.id.startsWith("reason")) {
+          // binary flags
+          reason |= score;
+        }
+        else if (sel.id.startsWith("heat")) {
+          $('#heat_hidden').val(score);
+        }
+        else if (sel.id.startsWith("light")) {
+          $('#light_hidden').val(score);
+        }
+        else {
+          console.error("Unknown selected button id : " + sel.id);
+        }
+      }
 
-        <div class="row justify-content-around">
-            <!--button type="button", class="col-2 smiley" onclick="(ev)=>{onClick(ev)}">&#128545;</button>
+      if (reason) {
+        $('#reason_hidden').val(reason);
+      }
+
+      return true;
+    }</script>
+
+  <style>
+    body {
+      background-image: url('background.jpg');
+      -webkit-background-size: cover;
+      -moz-background-size: cover;
+      background-size: cover;
+      -o-background-size: cover;
+    }
+
+    .button:focus {
+      outline: none !important;
+    }
+
+    button {
+      margin: 10px;
+      outline: none !important;
+    }
+
+    /* Indicateurs visuels */
+    button.smiley.selected {
+      background-color: #6989c5 !important;
+      border-radius: 50%;
+      border: none !important;
+      border-style: none !important;
+      padding: 0;
+      text-align: center;
+
+
+    }
+
+
+    .visible {
+      display: block;
+    }
+
+    .hidden {
+      display: none;
+    }
+
+    button.smiley {
+      font-size: 50px;
+      border: none !important;
+      background-color: transparent !important;
+      border-style: none !important;
+    }
+  </style>
+  <script>
+    /* Fonction pour mettre à jour l'état des boutons */
+    function updateButtonState(buttons, selectedButton) {
+      for (var i = 0; i < buttons.length; i++) {
+        buttons[i].classList.remove("selected");
+      }
+      selectedButton.classList.add("selected");
+    }
+
+    /* Fonction pour ajouter des gestionnaires d'événements clic aux boutons */
+    window.addEventListener("load", function () {
+      // Sélectionnez tous les boutons du formulaire
+      var buttons = document.querySelectorAll("button.general_confort");
+
+      // Ajoutez un gestionnaire d'événement clic à chaque bouton
+      for (var i = 0; i < buttons.length; i++) {
+        buttons[i].addEventListener("click", function () {
+          updateButtonState(buttons, this);
+        });
+      }
+    });
+  </script>
+  <script>
+    /* Fonction pour mettre à jour l'état des boutons */
+    function updateButtonState(buttons, selectedButton) {
+      for (var i = 0; i < buttons.length; i++) {
+        buttons[i].classList.remove("selected");
+      }
+      selectedButton.classList.add("selected");
+    }
+
+    /* Fonction pour ajouter des gestionnaires d'événements clic aux boutons */
+    window.addEventListener("load", function () {
+      // Sélectionnez tous les boutons du formulaire
+      var buttons = document.querySelectorAll("button.temper");
+
+      // Ajoutez un gestionnaire d'événement clic à chaque bouton
+      for (var i = 0; i < buttons.length; i++) {
+        buttons[i].addEventListener("click", function () {
+          updateButtonState(buttons, this);
+        });
+      }
+    });
+  </script>
+  <script>
+    /* Fonction pour mettre à jour l'état des boutons */
+    function updateButtonState(buttons, selectedButton) {
+      for (var i = 0; i < buttons.length; i++) {
+        buttons[i].classList.remove("selected");
+      }
+      selectedButton.classList.add("selected");
+    }
+
+    /* Fonction pour ajouter des gestionnaires d'événements clic aux boutons */
+    window.addEventListener("load", function () {
+      // Sélectionnez tous les boutons du formulaire
+      var buttons = document.querySelectorAll("button.lumi");
+
+      // Ajoutez un gestionnaire d'événement clic à chaque bouton
+      for (var i = 0; i < buttons.length; i++) {
+        buttons[i].addEventListener("click", function () {
+          updateButtonState(buttons, this);
+        });
+      }
+    });
+  </script>
+</head>
+
+<body class="container">
+
+  <form style="background-color: rgba(255, 255, 255, 0.7)" method="POST" action="" onsubmit="return onSend()">
+    <div class="row">
+      <h1 class="col-12 text-center">Comment évalueriez-vous le confort dans la salle ?</h1>
+    </div>
+
+    <div class="row justify-content-around">
+      <!--button type="button", class="col-2 smiley" onclick="(ev)=>{onClick(ev)}">&#128545;</button>
             <button type="button", class="col-2 smiley" onclick="onClick()">&#128542;</button>
             <button type="button", class="col-2 smiley" onclick="onClick()">&#128528;</button>
             <button type="button", class="col-2 smiley" onclick="onClick()">&#128522;</button>
             <button type="button", class="col-2 smiley" onclick="onClick()">&#128513;</button-->
 
-            <button type="button" id="mark0" class="col-2 smiley">&#128545;</button>
-            <button type="button" id="mark1" class="col-2 smiley" >&#128542;</button>
-            <button type="button" id="mark2" class="col-2 smiley" >&#128528;</button>
-            <button type="button" id="mark3" class="col-2 smiley" >&#128522;</button>
-            <button type="button" id="mark4" class="col-2 smiley" >&#128513;</button>
-        </div>
+      <button type="button" id="mark0" class="col-2 smiley general_confort">&#128545;</button>
+      <button type="button" id="mark1" class="col-2 smiley general_confort">&#128542;</button>
+      <button type="button" id="mark2" class="col-2 smiley general_confort">&#128528;</button>
+      <button type="button" id="mark3" class="col-2 smiley general_confort">&#128522;</button>
+      <button type="button" id="mark4" class="col-2 smiley general_confort">&#128513;</button>
+      <input type="hidden" id="level_hidden" name="level" />
+    </div>
 
-    <div id="discomfort_kind" class="hidden" >
-        <div class="row">
-            <h1 class="col-12 text-center">Quelle est la raison principale de votre inconfort</h1>
-        </div>
-        <div class="row justify-content-around">        
-        <button type="button" id="heat_button" class="col-2 smiley">&#127777;</button>
-        <button type="button" id="light_button" class="col-2 smiley" >	&#128161;</button>	
-        <button type="button" id="sound" class="col-2 smiley" >&#128266;</button>	
-          
+    <div id="discomfort_kind" class="hidden">
+      <div class="row">
+        <h1 class="col-12 text-center">Quelles sont les raisons de votre inconfort ?</h1>
+      </div>
+      <div class="row justify-content-around">
+        <button type="button" id="reason_1" class="col-2 smiley hb">&#127777;</button>
+        <button type="button" id="reason_2" class="col-2 smiley lb"> &#128161;</button>
+        <button type="button" id="reason_4" class="col-2 smiley sb">&#128266;</button>
+        <input type="hidden" id="reason_hidden" name="reason" />
+
         <div id="heat" class="hidden">
-            <div class="row">
-            <h1 class="col-12 ">Faisait-il trop froid où trop chaud ?</h1>
-            </div>
-        
-            <div class="row justify-content-around">        
-                <button type="button" id="mark0" class="col-2 smiley">&#129398;</button>
-                <button type="button" id="mark1" class="col-2 smiley" >&#129397;</button>
-            </div>
-         </div>
-        <div id="ligth" class="hidden">
-            <div class="row">
-                <h1 class="col-12 ">L'environnement était-il trop sombre où trop lumineux?</h1>
-            </div>
-            <div class="row justify-content-around">        
-                <button type="button" id="mark0" class="col-2 smiley">&#9729;</button>
-                <button type="button" id="mark1" class="col-2 smiley" >&#9728;</button>
-            </div>
+          <div class="row">
+            <h1 class="col-12 ">Aviez vous trop froid où trop chaud ?</h1>
+          </div>
+
+          <div class="row justify-content-around">
+            <button type="button" id="heat_0" class="col-2 smiley cold temper">&#129398;</button>
+            <button type="button" id="heat_1" class="col-2 smiley hot temper">&#129397;</button>
+          </div>
+
+          <input type="hidden" id="heat_hidden" name="heat" />
         </div>
-    </div>
-  
+        <div id="light" class="hidden">
+          <div class="row">
+            <h1 class="col-12 ">Faisait-il sombre où trop lumineux ?</h1>
+          </div>
+          <div class="row justify-content-around">
+            <button type="button" id="light_0" class="col-2 smiley low_l lumi">&#9729;</button>
+            <button type="button" id="light_1" class="col-2 smiley high_l lumi">&#9728;</button>
+          </div>
+
+          <input type="hidden" id="light_hidden" name="light" />
+
+
+        </div>
+      </div>
+
     </div>
 
-      <div class="row justify-content-center">
-        <button type="submit col-2">Envoyer</button>
+    <div class="row justify-content-center">
+      <input type="hidden" name="room" value="" />
+      <button type="submit" class="col-2">Envoyer</button>
     </div>
-    </form>
-    
-    <div class="row fixed-bottom ">
-        <div class="col-6 text-sm-start " , style="color:white">
-            <p class="text-left">Photo de <a href="https://unsplash.com/@maximalfocus?utm_source=unsplash&utm_medium=referral&utm_content=creditCopyText" , style="color:white">Maximalfocus</a> sur <a href="https://unsplash.com/fr/photos/VT4rx775FT4?utm_source=unsplash&utm_medium=referral&utm_content=creditCopyText" , style="color:white">Unsplash</a>
-            </p>
+  </form>
+
+  <div class="row fixed-bottom ">
+    <div class="col-6 text-sm-start " , style="color:white">
+      <p class="text-left">Photo de <a
+          href="https://unsplash.com/@maximalfocus?utm_source=unsplash&utm_medium=referral&utm_content=creditCopyText" ,
+          style="color:white">Maximalfocus</a> sur <a
+          href="https://unsplash.com/fr/photos/VT4rx775FT4?utm_source=unsplash&utm_medium=referral&utm_content=creditCopyText"
+          , style="color:white">Unsplash</a>
+      </p>
     </div>
     <div class="col-6 text-sm-end " , style="color:white">
-        <p class="text-right"> &copy <a href="https://mael-guiraud.github.io/",  style="color:white">Maël Guiraud</a>
-            </p>
-</div>
+      <p class="text-right"> &copy <a href="https://mael-guiraud.github.io/" , style="color:white">Maël Guiraud</a>
+      </p>
     </div>
-  </body>
+  </div>
+</body>
 
 </html>

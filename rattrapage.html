@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <title>Examen C</title>
+  <style>
+    /* Style pour centrer le texte */
+    body {
+      text-align: center; /* Centrer horizontalement */
+      margin-top: 20vh; /* Décaler verticalement pour un meilleur affichage */
+    }
+  </style>
+</head>
+<body>
+   
+  <button onclick="genererSujet()">Générer mon sujet</button>
+
+  <script>
+    // Fonction pour générer un sujet aléatoire
+    function genererSujet() {
+      // Liens possibles
+      var liens = [
+        '/Etude_cas/MPE/Sujet1.ipynb',
+        '/Etude_cas/MPE/Sujet2.ipynb',
+        '/Etude_cas/MPE/Sujet3.ipynb'
+      ];
+
+      // Générer un nombre aléatoire entre 0 et 2 pour choisir un des liens
+      var index = Math.floor(Math.random() * liens.length);
+
+      // Rediriger l'utilisateur vers le lien sélectionné
+      window.location.href = liens[index];
+    }
+  </script>
+</body>
+</html>

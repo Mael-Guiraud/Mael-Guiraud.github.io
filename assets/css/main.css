@@ -1307,14 +1307,23 @@ input, select, textarea {
 	
 			}
 			#header .photo {
-				width: 105px;
-			height: 105px;
-			line-height: 1px;
-			border: solid 1px #ffffff;
-			border-radius: 100%;
-				opacity: 0.5;
-	
+				width: 100px;
+				height: 100px;
+				line-height: 1px;
+				margin: 0 auto; /* Centrage */
+				padding: 0; /* Supprimez le padding négatif */
+				border: solid 1px #ffffff;
+				border-radius: 50%;
+				opacity: 0.7;
+				overflow: hidden; /* Assure que le contenu reste dans le cercle */
 			}
+			
+			#header .photo img {
+				display: block; /* Supprime les marges autour de l'image */
+				width: 100%; /* L'image occupe toute la largeur du parent */
+				height: auto; /* Ajustement proportionnel de la hauteur */
+			}
+			
 
 		#header .content {
 			border-style: solid;
@@ -1324,7 +1333,7 @@ input, select, textarea {
 			max-width: 100%;
 		}
 
-			#header .content .inner {
+			#header .content {
 				-moz-transition: max-height 0.75s ease, padding 0.75s ease, opacity 0.325s ease-in-out;
 				-webkit-transition: max-height 0.75s ease, padding 0.75s ease, opacity 0.325s ease-in-out;
 				-ms-transition: max-height 0.75s ease, padding 0.75s ease, opacity 0.325s ease-in-out;
@@ -1613,6 +1622,7 @@ input, select, textarea {
 				#main article .close:active:before {
 					background-color: rgba(255, 255, 255, 0.175);
 				}
+
 
 		@media screen and (max-width: 736px) {
 
